@@ -22,7 +22,7 @@ RUN ls -la &&\
         # tesseract
         tesseract tesseract-data-eng tesseract-data-jpn \
         # opencv depends
-        tbb openexr gst-plugins-base libdc1394 cblas lapack libgphoto2 openjpeg2 ffmpeg &&\
+        tbb openexr cblas lapack openjpeg2 ffmpeg &&\
     # Build OpenCV(enable tesseract support)
     sudo -u ${USERNAME} makepkg --noconfirm -sir &&\
     cd .. &&\
