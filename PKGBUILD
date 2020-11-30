@@ -4,7 +4,7 @@
 
 pkgname=opencv-tesseract
 pkgver=4.5.0
-pkgrel=3
+pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
 arch=(x86_64)
 license=(BSD)
