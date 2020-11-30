@@ -27,6 +27,8 @@ RUN ls -la &&\
     sudo -u ${USERNAME} makepkg --noconfirm -sir &&\
     cd .. &&\
     rm -rf build &&\
-    sudo pacman -Scc
+    # sudo pacman -Scc <-- doen't work. Why??
+    # Workaround of above, erase /var/cache/pacman/pkg/* files
+    sudo rm -f /var/cache/pacman/pkg/*
 WORKDIR /home/${USERNAME}
 CMD ["/bin/bash"]
