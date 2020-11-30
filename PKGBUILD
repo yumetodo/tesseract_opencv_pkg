@@ -9,7 +9,7 @@ pkgdesc="Open Source Computer Vision Library"
 arch=(x86_64)
 license=(BSD)
 url="https://opencv.org/"
-depends=(tbb openexr cblas lapack openjpeg2 ffmpeg)
+depends=(tbb openexr openjpeg2 ffmpeg)
 makedepends=(cmake mesa eigen hdf5 lapacke vtk glew)
 conflicts=(opencv)
 optdepends=('vtk: for the viz module'
@@ -21,8 +21,6 @@ sha256sums=('168f6e61d8462fb3d5a29ba0d19c0375c111125cac753ad01035a359584ccde9'
             'a65f1f0b98b2c720abbf122c502044d11f427a43212d85d8d2402d7a6339edda')
 
 build() {
-  # cmake's FindLAPACK doesn't add cblas to LAPACK_LIBRARIES, so we need to specify them manually
-  _pythonpath=`python -c "from sysconfig import get_path; print(get_path('platlib'))"`
   cmake -B build -S opencv-$pkgver \
     -DWITH_OPENCL=ON \
     -DWITH_OPENGL=ON \
@@ -40,9 +38,6 @@ build() {
     -DBUILD_opencv_python3=OFF \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DOPENCV_EXTRA_MODULES_PATH="$srcdir/opencv_contrib-$pkgver/modules" \
-    -DLAPACK_LIBRARIES="/usr/lib/liblapack.so;/usr/lib/libblas.so;/usr/lib/libcblas.so" \
-    -DLAPACK_CBLAS_H="/usr/include/cblas.h" \
-    -DLAPACK_LAPACKE_H="/usr/include/lapacke.h" \
     -DOPENCV_GENERATE_PKGCONFIG=ON \
     -DOPENCV_ENABLE_NONFREE=ON \
     -DOPENCV_GENERATE_SETUPVARS=OFF \
