@@ -8,7 +8,7 @@ jobs:
           name: init pacman
           command: |
             sudo pacman -Syu --noconfirm
-            sudo pacman -S git openssh
+            sudo pacman -S --noconfirm git openssh
       - checkout
       - run: namcap PKGBUILD
       - run: makepkg -sci --noconfirm
