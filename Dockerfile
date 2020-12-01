@@ -3,6 +3,7 @@ FROM archlinux:base-devel
 ARG USERNAME=u1and0
 ARG UID=1000
 ARG GID=1000
+COPY mirrorlist /etc/pacman.d/mirrorlist
 RUN pacman -Syu --noconfirm && \
     echo "USERNAME: $USERNAME UID: $UID GID: $GID" &&\
     groupadd -g ${GID} ${USERNAME} &&\
