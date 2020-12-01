@@ -4,7 +4,11 @@ jobs:
     docker:
       - image: imrehg/archlinux-makepkg
     steps:
-      - run: sudo pacman -Syu --noconfirm
+      - run:
+          name: init pacman
+          command: |
+            sudo pacman -Syu --noconfirm
+            sudo pacman -S git openssh
       - checkout
       - run: namcap PKGBUILD
       - run: makepkg -sci --noconfirm
