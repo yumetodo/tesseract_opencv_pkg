@@ -23,24 +23,24 @@ jobs:
       - attach_workspace:
           at: ./artifacts
       - run: ls -la
-      - run: |
-          go get github.com/tcnksm/ghr
-          ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
+      - run:
+          name: create github release when on tag
+          command: |
+            if git describe --tags --abbrev=0 --exact-match; then
+              go get github.com/tcnksm/ghr
+              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
+            else
+              echo "not executed"
+              git name-rev --tags --name-only HEAD
+            fi
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              only: /.*/
+      - build
       - deploy:
           requires:
             - build
           filters:
             branches:
-              ignore: /.*/
-            tags:
-              only: /^v\d+\.\d+\.\d+/
+              only: master
