@@ -16,13 +16,6 @@ jobs:
   deploy:
     docker:
       - image: cimg/go:1.15
-    requires:
-      - build
-    filters:
-      branches:
-        ignore: /.*/
-      tags:
-        only: /^v\d+\.\d+\.\d+/
     steps:
       - attach_workspace:
           at: ./artifacts
@@ -37,3 +30,8 @@ workflows:
       - deploy:
           requires:
             - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d+\.\d+\.\d+/
