@@ -14,13 +14,14 @@ jobs:
       - run: makepkg -sci --noconfirm
       - run:
           command: |
-            git describe --tags --abbrev=0 --exact-match
+            git describe --tags --abbrev=0 --exact-match > tag.txt
             echo $? > on_tag.txt
       - persist_to_workspace:
           root: .
           paths:
             - "opencv-tesseract*"
             - "on_tag.txt"
+            - "tag.txt"
   deploy:
     docker:
       - image: cimg/go:1.15
@@ -32,8 +33,10 @@ jobs:
           name: create github release when on tag
           command: |
             if [ $(cat ./artifacts/on_tag.txt) -eq "0" ]; then
+              VERSION=$(cat ./artifacts/tag.txt)
+              rm ./artifacts/*.txt
               go get github.com/tcnksm/ghr
-              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
+              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete "${VERSION}" ./artifacts/
             else
               echo "not executed"
             fi
