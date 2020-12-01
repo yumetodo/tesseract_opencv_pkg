@@ -8,17 +8,17 @@ jobs:
       - run: sudo pacman -Syu --noconfirm
       - run: namcap PKGBUILD
       - run: makepkg -sci --noconfirm
-      - run: ls -la
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - "opencv-tesseract*"
   deploy:
     docker:
       - image: cimg/go:1.15
     steps:
       - attach_workspace:
           at: ./artifacts
+      - run: ls -la
       - run: |
           go get github.com/tcnksm/ghr
           ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
