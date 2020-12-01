@@ -4,8 +4,8 @@ jobs:
     docker:
       - image: imrehg/archlinux-makepkg
     steps:
-      - checkout
       - run: sudo pacman -Syu --noconfirm
+      - checkout
       - run: namcap PKGBUILD
       - run: makepkg -sci --noconfirm
       - persist_to_workspace:
@@ -29,7 +29,7 @@ workflows:
       - build:
           filters:
             branches:
-              ignore: /.*/
+              only: /.*/
             tags:
               only: /.*/
       - deploy:
