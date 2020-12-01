@@ -10,7 +10,7 @@ arch=(x86_64)
 license=(BSD)
 url="https://opencv.org/"
 depends=(tbb openexr openjpeg2 ffmpeg)
-makedepends=(cmake mesa eigen hdf5 lapacke vtk glew)
+makedepends=(cmake mesa eigen hdf5 vtk glew)
 conflicts=(opencv)
 optdepends=('vtk: for the viz module'
             'hdf5: for the HDF5 module and the Python bindings'
@@ -30,6 +30,8 @@ build() {
     -DWITH_GSTREAMER=OFF \
     -DWITH_1394=OFF \
     -DWITH_GPHOTO2=OFF \
+    -DWITH_PROTOBUF=OFF \
+    -DOPENCV_DNN_OPENCL=OFF
     -DBUILD_WITH_DEBUG_INFO=OFF \
     -DBUILD_TESTS=OFF \
     -DBUILD_PERF_TESTS=OFF \
