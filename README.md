@@ -26,3 +26,8 @@ Also, Original package is too big for OCR usage.
 - lapack
 - protobuf
 - DNN
+
+## Docker
+
+- DockerHub: [https://hub.docker.com/r/yumetodo/tesseract_opencv](https://hub.docker.com/r/yumetodo/tesseract_opencv)
+- GitHub: [https://github.com/yumetodo/docker_tesseract_opencv_env](https://github.com/yumetodo/docker_tesseract_opencv_env)
