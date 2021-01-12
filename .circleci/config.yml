@@ -12,10 +12,7 @@ jobs:
       - checkout
       - run: namcap PKGBUILD
       - run: makepkg -sci --noconfirm
-      - run:
-          command: |
-            git describe --tags --abbrev=0 --exact-match > tag.txt
-            echo $? > on_tag.txt
+      - run: ./.circleci/collect_info.sh
       - persist_to_workspace:
           root: .
           paths:
